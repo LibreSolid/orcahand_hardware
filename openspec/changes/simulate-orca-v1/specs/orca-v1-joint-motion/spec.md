@@ -22,7 +22,7 @@ The simulation SHALL provide `Rest`, `Open`, `Fist`, `Pinch`, and `Point` instru
 - **THEN** each instruction lands exactly on its targets and the hand remains within the reviewed overlap inventory at every sampled instant
 
 ### Requirement: Motion semantics are honest
-Driver angles SHALL be documented as visualization offsets from the STEP rest pose and SHALL NOT be presented as calibrated ORCA hardware commands.
+Driver angles SHALL be documented as visualization offsets from the STEP-derived rest pose and SHALL NOT be presented as calibrated ORCA hardware commands.
 
 #### Scenario: Maker reads control documentation
 - **WHEN** the maker reviews the simulation controls

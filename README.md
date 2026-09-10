@@ -52,6 +52,61 @@ orca_v1/                         # V1 design (self-contained)
 
 Variant 3MFs under `orca_v2/<variant>/` automatically resolve part names against the whole `orca_v2/` tree, so they pick up shared STLs from `orca_v2/base/` without duplication. Edit a base STL once and every variant 3MF that references it gets updated.
 
+## ORCA v1 Simulation
+
+`simulation/` adds a solid-node model of the printable right-hand v1
+mechanism. Every one of its 23 rendered leaves loads the actual repository
+STL for that manufactured part. The simulation does not substitute boxes,
+cylinders, envelopes, decimated meshes, or other visual proxies. Empty
+assembly nodes supply kinematics only.
+
+The v1 STEP document supplies the authoritative occurrence layout. It is not
+used as executable geometry because its generated adapters cannot currently
+select repeated product names such as `SHELL`. The imported transcription is
+kept under `simulation/v1/` as reviewable placement evidence; source hashes,
+placements, exclusions, and measured contacts are recorded in
+[`docs/measurements.md`](docs/measurements.md).
+
+From this project directory in a LibreSolid Studio development workspace:
+
+```bash
+# Source identities and layout transcription
+../../../.venv/bin/python -m unittest simulation.test_source -v
+
+# Fast development contracts and the complete motion scenario
+../../../.venv/bin/solid test --faceted simulation/fixed.py:FixedLowerAssembly
+../../../.venv/bin/solid test --faceted simulation/machine.py:OrcaV1
+
+# Publish the interactive model
+../../../.venv/bin/solid build simulation/machine.py:OrcaV1
+
+# Visual evidence from actual part meshes
+../../../.venv/bin/solid snapshot simulation/machine.py:OrcaV1 -o snapshot-v1-rest.png --autocenter --viewall
+../../../.venv/bin/solid snapshot simulation/poses.py:FistPose -o snapshot-v1-fist.png --autocenter --viewall
+../../../.venv/bin/solid snapshot simulation/poses.py:PointPose -o snapshot-v1-point.png --autocenter --viewall
+../../../.venv/bin/solid snapshot simulation/machine.py:OrcaV1 -o snapshot-v1-axes.png --autocenter --viewall --view axes
+```
+
+The viewer exposes four intent controls:
+
+| Control | Range | Meaning |
+| --- | ---: | --- |
+| `grasp` | 0–100% | Coordinated MCP/PIP flexion of the four fingers |
+| `index_extension` | 0–100% | Counteracts index flexion for the Point pose |
+| `thumb_opposition` | -10–35° | Thumb rotation about the evidenced base/proximal hinge |
+| `wrist` | -25–25° | Hand rotation about the STEP-derived wrist pivot |
+
+`Rest`, `Open`, `Fist`, `Pinch`, and `Point` are two-second viewer
+instructions. Their values are visualization offsets from the exported rest
+pose, not calibrated hardware commands. Tendons, compliance, servo rates,
+forces, tactile sensing, and controller dynamics are not simulated.
+
+For ground-up inspection, start with
+`simulation/fixed.py:FixedLowerAssembly`, then inspect
+`simulation/machine.py:OrcaV1` at Rest, and finally compare the standalone
+`FistPose` and `PointPose` snapshot roots. Generated `_build/` content and
+`snapshot*.png` files are ignored.
+
 ## Updating Print Files After STL Changes
 
 ```bash

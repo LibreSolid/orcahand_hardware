@@ -35,6 +35,9 @@ Thumbs.db
 # Build outputs
 dist/
 build/
+_build*/
+screenshot.png
+snapshot*.png
 
 # Python bytecode
 __pycache__/

@@ -9,7 +9,7 @@ The v1 STEP is nevertheless not directly buildable through the current public im
 - The machine frame is the STEP document's world frame in millimetres.
 - The forearm remains at the document identity; the hand/wrist group uses the document's wrist placement as its rest transform.
 - Joint zero poses are transcribed from the STEP assembly's occurrence transforms. Rotation axes are explicit simulation assumptions aligned with the visible hinge geometry because the STEP occurrence tree carries placements but no joint semantics. A driver value is an added angle in degrees from that exported rest pose, not an absolute robot-control calibration value.
-- `grasp` is a 0–100 percent intent that maps to the four fingers' MCP/PIP flexion ports with digit-specific limits; `spread`, `thumb_opposition`, and `wrist` are degrees added about their named rest axes.
+- `grasp` is a 0–100 percent intent that maps to the four fingers' MCP/PIP flexion ports with digit-specific limits; `index_extension` counteracts index flexion for pointing, while `thumb_opposition` and `wrist` are degrees added about their evidenced axes.
 - A named 0.05 mm `SEAT_CLEARANCE` distinguishes seated faces from accidental positive-volume overlap where the exported source leaves coincident mating faces.
 
 ## Goals / Non-Goals
@@ -46,7 +46,7 @@ Project-owned wrappers retain `render()` exclusively for the source rest placeme
 
 ### Expose intent rather than seventeen motor channels
 
-Four root controls are sufficient for the demonstration: grasp percentage, finger spread, thumb opposition, and wrist angle. Digit classes retain MCP/PIP/DIP-style ports so later slices can expose independent joints without restructuring. The pose set is `Rest`, `Open`, `Fist`, `Pinch`, and `Point`; transitions use two seconds, reflecting visible servo motion without claiming a measured actuator rate.
+Four root controls are sufficient for the demonstration: grasp percentage, index extension percentage, thumb opposition, and wrist angle. Digit classes retain MCP/PIP/DIP-style ports so later slices can expose independent joints without restructuring; DIP ports remain explicitly bound at zero because the available exports do not identify a safe distal pivot. The pose set is `Rest`, `Open`, `Fist`, `Pinch`, and `Point`; transitions use two seconds, reflecting visible servo motion without claiming a measured actuator rate.
 
 ### Treat upstream overlap as data
 
@@ -63,6 +63,8 @@ STL exports carry no material colours, so printable parts receive a consistent p
 - The v1 STEP is a complete occurrence tree and is sufficient to recover the right-hand rest assembly without external repositories.
 - The v1 finger, tower, palm, spool, and ancillary STL exports inspected for the fallback are watertight; `BottomTower.stl` includes four zero-volume mesh bodies in addition to its printable body, so its wrapper selects body 0 explicitly.
 - A disposable seven-piece v1 probe built successfully from STL geometry and STEP-derived placements and produced coherent palm, tower, and index-finger snapshots at rest and under symbolic curl.
+- Rotating the finger bases as an invented spread degree of freedom creates positive-volume intersections with their producible neighbouring parts. The source supports flexion but provides no abduction joint evidence, so the control surface uses independent index extension instead.
+- The thumb base and proximal link share the STEP-derived pivot `(-23.640322608, 0, 18.46984426)` and a common transformed hinge axis `(-0.578532546, 0.342020143, -0.740487890)`; using both removes the false intersections produced by rotating around the assembly origin.
 - The installed framework exposes the documented `solid import-step` CLI but does not export `StepAssembly` from `solid_node.node`; generated `StepNode` wrappers also fail on repeated product names, so the executable simulation avoids those interfaces.
 
 ### Findings for the framework

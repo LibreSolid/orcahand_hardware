@@ -5,7 +5,7 @@ The repository publishes the parts of the ORCA hand, but its drawings alone do n
 ## What Changes
 
 - Add a thin `simulation/` package that composes the printable right-hand ORCA v1 parts from their project-owned STL exports without changing upstream geometry, using the STEP occurrence tree only as placement evidence.
-- Present the hand through intent-level controls for grasp, finger spread, thumb opposition, and wrist motion, with every moved joint represented by a bound kinematic port.
+- Present the hand through intent-level controls for grasp, index extension, thumb opposition, and wrist motion, with every moved joint represented by a bound kinematic port.
 - Add a small `Rest`, `Open`, `Fist`, `Pinch`, and `Point` demonstration set with physically meaningful durations.
 - Give the printable mechanism a consistent simulation colour scheme while retaining every selected STL's source geometry.
 - Add assembly, motion, source-layout, and whole-model integrity contracts, including an explicit inventory for overlaps already present in the upstream assembly.

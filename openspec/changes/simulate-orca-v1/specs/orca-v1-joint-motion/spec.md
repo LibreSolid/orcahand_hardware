@@ -1,11 +1,18 @@
 ## ADDED Requirements
 
 ### Requirement: Intent-level control surface
-The simulation SHALL expose at most four root drivers named `grasp`, `spread`, `thumb_opposition`, and `wrist`, with units and ranges that state their visualization meaning.
+The simulation SHALL expose at most four root drivers named `grasp`, `index_extension`, `thumb_opposition`, and `wrist`, with units and ranges that state their visualization meaning.
 
 #### Scenario: Maker inspects controls
 - **WHEN** the model is published to `viewer.json`
 - **THEN** the driver table contains exactly those four qualified root ids with their declared defaults, ranges, and units
+
+### Requirement: Motion follows evidenced pivots
+The simulation SHALL move actual part meshes only around STEP-derived or geometry-evidenced joint pivots and axes, and SHALL NOT invent finger abduction where the source assembly provides no such joint.
+
+#### Scenario: Point pose extends the index
+- **WHEN** the `Point` instruction closes the other fingers
+- **THEN** `index_extension` counteracts index MCP/PIP flexion while all finger spread ports remain explicitly bound to zero
 
 ### Requirement: Joint motion remains reachable
 Every articulated finger and wrist motion SHALL be represented by a bound port, including ports held at zero in the current intent mapping.

@@ -51,9 +51,16 @@ All transforms are millimetres and degrees in the source STEP world frame. Repre
 | Index | 129.501001644° about `(0.623528122, 0.580747170, -0.523397941)` | `(14.537123521, -11.569695565, 188.002658784)` |
 | Wrist bearing | 114.404497338° about `(-0.540716203, 0.644400478, -0.540716203)` | `(74.728908451, 0, 104.871074582)` |
 
-These transforms locate the exported rest pose. The wrist pivot is
-`(74.728908451, 0, 104.871074582)`. The thumb base and proximal link share the
-local pivot `(-23.640322608, 0, 18.469844260)` and common transformed axis
+These transforms locate the exported rest pose. The wrist bearing point is
+`(74.728908451, 0, 104.871074582)`. The 42-tooth carpal gear center is
+`(70.628908451, 0, 104.871074582)` and its transformed local Z axis is world
+`-X`; those points share one wrist centerline. The XC430's 23-tooth pinion
+center is `(64.728908451, -12, 75.206280633)`, 32 mm from the carpal gear in
+the YZ plane, and its transformed local Z axis is world `+X`. The parallel,
+opposite gear axes establish world X as the wrist rotation direction; the
+existing bearing point remains a valid pivot because it lies on the carpal
+gear's axis. The thumb base and proximal link share the local pivot
+`(-23.640322608, 0, 18.469844260)` and common transformed axis
 `(-0.578532546, 0.342020143, -0.740487890)`. Simulation controls add
 visualization offsets to these frames; they are not calibrated hardware joint
 values.

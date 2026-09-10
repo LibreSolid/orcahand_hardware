@@ -1,6 +1,6 @@
 ## Why
 
-The ORCA v1 viewer currently rotates the hand about world Y, but the source assembly places the wrist servo pinion and carpal gear coaxially along world X. The wrist control therefore depicts the wrong mechanical degree of freedom and must follow the evidenced gear axis.
+The ORCA v1 viewer currently rotates the hand about world Y, but the source assembly places the wrist servo pinion and carpal gear on parallel world-X axes, with the carpal gear coaxial to the wrist bearing. The wrist control therefore depicts the wrong mechanical degree of freedom and must follow the evidenced carpal-gear axis.
 
 ## What Changes
 
@@ -17,7 +17,7 @@ None.
 
 ### Modified Capabilities
 
-- `orca-v1-joint-motion`: Require wrist motion to follow the coaxial wrist servo-pinion and carpal-gear axis evidenced by the v1 STEP assembly.
+- `orca-v1-joint-motion`: Require wrist motion to follow the carpal gear and wrist bearing's world-X axis evidenced by the v1 STEP assembly.
 
 ## Impact
 

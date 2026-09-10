@@ -9,6 +9,7 @@ from .parts import BottomTower, RightCarpals, RightTopTower
 
 
 WRIST_PIVOT = (74.728908451, 0.0, 104.871074582)
+WRIST_AXIS = (1.0, 0.0, 0.0)
 
 
 def bind_intent(root):
@@ -69,7 +70,7 @@ class ArticulatedHand(AssemblyNode):
         return self.geometry.digits
 
     def simulate(self):
-        self.geometry.rotate(self.wrist.value, (0.0, 1.0, 0.0))
+        self.geometry.rotate(self.wrist.value, WRIST_AXIS)
 
 
 class OrcaV1(AssemblyNode):

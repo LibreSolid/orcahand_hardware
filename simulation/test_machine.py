@@ -1,5 +1,7 @@
 """Whole-machine contracts for the ORCA v1 simulation."""
 
+import numpy as np
+
 from solid_node.motion.ports import declared_ports
 from solid_node.simulation import ScenarioTest, qualified_drivers, qualified_instructions
 from solid_node.test import TestCase
@@ -102,6 +104,31 @@ class OrcaV1Test(TestCase):
 
     def test_positive_grasp_flexes_the_index_inward(self):
         self.assert_positive_index_flexion(100.0)
+
+    def test_wrist_rotates_about_evidenced_world_x_axis(self):
+        palm = self.node.hand.geometry.palm
+        rest = {
+            "grasp": 0.0,
+            "index_extension": 0.0,
+            "thumb_opposition": 0.0,
+            "wrist": 0.0,
+        }
+        self.node.set_state(**rest)
+        rest_vertices = palm.mesh.vertices.copy()
+
+        self.node.set_state(**{**rest, "wrist": 20.0})
+        moved_vertices = palm.mesh.vertices.copy()
+
+        self.assertLess(
+            float(np.max(np.abs(moved_vertices[:, 0] - rest_vertices[:, 0]))),
+            1e-8,
+        )
+        self.assertGreater(
+            float(np.max(np.linalg.norm(
+                moved_vertices[:, 1:] - rest_vertices[:, 1:], axis=1
+            ))),
+            10.0,
+        )
 
     def test_sign_flipped_grasp_is_rejected(self):
         with self.assertRaises(AssertionError):

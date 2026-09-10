@@ -1,6 +1,6 @@
 ## Context
 
-The v1 simulation translates the articulated hand to the STEP wrist-bearing point `(74.728908451, 0, 104.871074582)` and currently rotates its geometry about local Y. The source assembly supplies no explicit joint semantics, but it does supply the complete wrist drive train: the XC430 wrist servo places its local Z pinion axis on world `+X`, and the carpal assembly rotates the 42-tooth gear's local Z axis onto world `-X`. Their centers share `y = 0` and `z ≈ 104.871 mm`, so the two opposite vectors describe one coaxial world-X hinge.
+The v1 simulation translates the articulated hand to the STEP wrist-bearing point `(74.728908451, 0, 104.871074582)` and currently rotates its geometry about local Y. The source assembly supplies no explicit joint semantics, but it does supply the complete wrist drive train: the XC430 wrist servo places its local Z pinion axis on world `+X`, and the carpal assembly rotates the 42-tooth gear's local Z axis onto world `-X`. The axes are parallel and 32 mm apart, while the carpal gear and wrist bearing share `y = 0` and `z ≈ 104.871 mm`; the latter centerline is the world-X wrist hinge.
 
 ## Goals / Non-Goals
 
@@ -26,6 +26,6 @@ The driver and instructions remain unchanged because their values already repres
 
 ## Risks / Trade-offs
 
-- The STEP document encodes placements rather than joints → The axis is cross-checked from both meshing wrist gears, whose transformed local Z axes are collinear and opposite.
+- The STEP document encodes placements rather than joints → The axis is cross-checked from both meshing wrist gears, whose transformed local Z axes are parallel and opposite, and from the carpal gear's coaxial wrist bearing.
 - The executable simulation omits the drive gears → The contract measures the actual printable palm moved about the drive train centerline, while the source-derived axis calculation is recorded in measurements.
 - Rotation sign may not match a hardware controller convention → Preserve the existing signed range and continue labelling it as a visualization offset, not calibrated control data.

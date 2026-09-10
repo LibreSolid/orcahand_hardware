@@ -84,6 +84,8 @@ From this project directory in a LibreSolid Studio development workspace:
 ../../../.venv/bin/solid snapshot simulation/machine.py:OrcaV1 -o snapshot-v1-rest.png --autocenter --viewall
 ../../../.venv/bin/solid snapshot simulation/poses.py:FistPose -o snapshot-v1-fist.png --autocenter --viewall
 ../../../.venv/bin/solid snapshot simulation/poses.py:PointPose -o snapshot-v1-point.png --autocenter --viewall
+../../../.venv/bin/solid snapshot simulation/poses.py:PositiveWristPose -o snapshot-v1-wrist-positive.png --autocenter --viewall
+../../../.venv/bin/solid snapshot simulation/poses.py:NegativeWristPose -o snapshot-v1-wrist-negative.png --autocenter --viewall --view axes
 ../../../.venv/bin/solid snapshot simulation/machine.py:OrcaV1 -o snapshot-v1-axes.png --autocenter --viewall --view axes
 ```
 
@@ -94,7 +96,7 @@ The viewer exposes four intent controls:
 | `grasp` | 0–100% | Coordinated MCP/PIP flexion of the four fingers |
 | `index_extension` | 0–100% | Counteracts index flexion for the Point pose |
 | `thumb_opposition` | -10–35° | Thumb rotation about the evidenced base/proximal hinge |
-| `wrist` | -25–25° | Hand rotation about the STEP-derived wrist pivot |
+| `wrist` | -25–25° | Hand rotation about the STEP-derived world-X carpal-gear and wrist-bearing axis |
 
 `Rest`, `Open`, `Fist`, `Pinch`, and `Point` are two-second viewer
 instructions. Their values are visualization offsets from the exported rest
@@ -104,8 +106,8 @@ forces, tactile sensing, and controller dynamics are not simulated.
 For ground-up inspection, start with
 `simulation/fixed.py:FixedLowerAssembly`, then inspect
 `simulation/machine.py:OrcaV1` at Rest, and finally compare the standalone
-`FistPose` and `PointPose` snapshot roots. Generated `_build/` content and
-`snapshot*.png` files are ignored.
+`FistPose`, `PointPose`, `PositiveWristPose`, and `NegativeWristPose` snapshot
+roots. Generated `_build/` content and `snapshot*.png` files are ignored.
 
 ## Updating Print Files After STL Changes
 

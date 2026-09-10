@@ -36,3 +36,35 @@ class PointPose(AssemblyNode):
 
     def simulate(self):
         bind_intent(self)
+
+
+class PositiveWristPose(AssemblyNode):
+    tower = ForearmTower()
+    hand = ArticulatedHand()
+
+    grasp = Driver(default=0.0, range=(0.0, 100.0), unit="percent")
+    index_extension = Driver(default=0.0, range=(0.0, 100.0), unit="percent")
+    thumb_opposition = Driver(default=0.0, range=(-10.0, 35.0), unit="deg")
+    wrist = Driver(default=25.0, range=(-25.0, 25.0), unit="deg")
+
+    def render(self):
+        self.hand.translate(WRIST_PIVOT)
+
+    def simulate(self):
+        bind_intent(self)
+
+
+class NegativeWristPose(AssemblyNode):
+    tower = ForearmTower()
+    hand = ArticulatedHand()
+
+    grasp = Driver(default=0.0, range=(0.0, 100.0), unit="percent")
+    index_extension = Driver(default=0.0, range=(0.0, 100.0), unit="percent")
+    thumb_opposition = Driver(default=0.0, range=(-10.0, 35.0), unit="deg")
+    wrist = Driver(default=-25.0, range=(-25.0, 25.0), unit="deg")
+
+    def render(self):
+        self.hand.translate(WRIST_PIVOT)
+
+    def simulate(self):
+        bind_intent(self)
